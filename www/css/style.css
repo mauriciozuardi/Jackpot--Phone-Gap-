@@ -1,0 +1,112 @@
+body{
+	margin:0px;
+	background-color:black;
+}
+#container{
+	width:960px;
+	height:640px;
+	background-color:#444;
+	overflow:hidden;
+}
+#slots{
+	width:960px;
+	height:640px;
+	background-image:url(../img/slots.png);
+	position:absolute;
+	z-index:1;
+}
+.coluna{
+	width:224px;
+	height:299px;
+	margin-right:10px;
+	border-radius:40px;
+	display:inline-block;
+	
+	position: relative;
+/*	overflow:hidden;*/
+}
+#coluna1{
+	margin-left: 134px;
+	top: -430px;
+}
+#coluna2{
+	top: -430px;
+}
+#coluna3{
+	top: -430px;
+}
+.card{
+	width:224px;
+	height:299px;
+	border-radius:5px;
+	margin-bottom:1px;
+	position: relative;
+/*	background-color:rgba(255,255,255,.2);*/
+}
+
+/*----------POSIÇÕES DAS CARTAS ---------*/
+
+#card1{
+	top:0px;
+}
+#card2{
+	top:0px;
+/*	display:none;*/
+}
+#card3{
+	top:0px;
+/*	display:none;*/
+}
+#card4{
+	top:0px;
+/*	display:none;*/
+}
+#card5{
+	top:0px;
+/*	display:none;*/
+}
+#card6{
+	top:0px;
+/*	display:none;*/
+}
+#card7{
+	top:0px;
+/*	display:none;*/
+}
+#card8{
+	top:0px;
+/*	display:none;*/
+}
+#card9{
+	top:0px;
+/*	display:none;*/
+}
+
+/*----------IDS DAS CARTAS ---------*/
+.c0001{
+	background-image:url(../img/c0001.png);
+}
+.c0002{
+	background-image:url(../img/c0002.png);
+}
+.c0003{
+	background-image:url(../img/c0003.png);
+}
+.c0004{
+	background-image:url(../img/c0004.png);
+}
+.c0005{
+	background-image:url(../img/c0005.png);
+}
+.c0006{
+	background-image:url(../img/c0006.png);
+}
+.c0007{
+	background-image:url(../img/c0007.png);
+}
+.c0008{
+	background-image:url(../img/c0008.png);
+}
+.c0009{
+	background-image:url(../img/c0009.png);
+}

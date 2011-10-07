@@ -25,14 +25,12 @@
 		11245D6A143F69F20037C77D /* PhoneGap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11245D69143F69F20037C77D /* PhoneGap.framework */; };
 		11245D6F143F69F20037C77D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 11245D6D143F69F20037C77D /* Localizable.strings */; };
 		11245D73143F69F20037C77D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 11245D71143F69F20037C77D /* Localizable.strings */; };
-		11245D76143F69F20037C77D /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 11245D75143F69F20037C77D /* icon.png */; };
-		11245D78143F69F20037C77D /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 11245D77143F69F20037C77D /* icon@2x.png */; };
-		11245D7A143F69F20037C77D /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 11245D79143F69F20037C77D /* icon-72.png */; };
-		11245D7D143F69F20037C77D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 11245D7C143F69F20037C77D /* Default.png */; };
-		11245D7F143F69F20037C77D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 11245D7E143F69F20037C77D /* Default@2x.png */; };
 		11245D81143F69F20037C77D /* Capture.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 11245D80143F69F20037C77D /* Capture.bundle */; };
 		11245D83143F69F20037C77D /* PhoneGap.plist in Resources */ = {isa = PBXBuildFile; fileRef = 11245D82143F69F20037C77D /* PhoneGap.plist */; };
 		11245D87143F69F20037C77D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11245D86143F69F20037C77D /* AppDelegate.m */; };
+		119AF2F3143F81890026BBC2 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 119AF2F2143F81890026BBC2 /* www */; };
+		119AF2FA143F82800026BBC2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 119AF2F9143F82800026BBC2 /* Default@2x.png */; };
+		119AF2FD143F84080026BBC2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 119AF2FB143F82860026BBC2 /* Default.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,10 +48,10 @@
 		11245D5A143F69F20037C77D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		11245D5C143F69F20037C77D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		11245D5E143F69F20037C77D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		11245D62143F69F20037C77D /* jackpot-Info.plist */ = {isa = PBXFileReference; path = "jackpot-Info.plist"; sourceTree = "<group>"; };
+		11245D62143F69F20037C77D /* jackpot-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "jackpot-Info.plist"; sourceTree = "<group>"; };
 		11245D64143F69F20037C77D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		11245D66143F69F20037C77D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		11245D68143F69F20037C77D /* jackpot-Prefix.pch */ = {isa = PBXFileReference; path = "jackpot-Prefix.pch"; sourceTree = "<group>"; };
+		11245D68143F69F20037C77D /* jackpot-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "jackpot-Prefix.pch"; sourceTree = "<group>"; };
 		11245D69143F69F20037C77D /* PhoneGap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhoneGap.framework; path = /Users/Shared/PhoneGap/Frameworks/PhoneGap.framework; sourceTree = "<absolute>"; };
 		11245D6E143F69F20037C77D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		11245D72143F69F20037C77D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -64,9 +62,12 @@
 		11245D7E143F69F20037C77D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/splash/Default@2x.png"; sourceTree = "<group>"; };
 		11245D80143F69F20037C77D /* Capture.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Capture.bundle; path = Resources/Capture.bundle; sourceTree = "<group>"; };
 		11245D82143F69F20037C77D /* PhoneGap.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PhoneGap.plist; sourceTree = "<group>"; };
-		11245D85143F69F20037C77D /* AppDelegate.h */ = {isa = PBXFileReference; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
+		11245D85143F69F20037C77D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		11245D86143F69F20037C77D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Classes/AppDelegate.m; sourceTree = "<group>"; };
-		11245D89143F69F20037C77D /* README */ = {isa = PBXFileReference; name = README; path = Plugins/README; sourceTree = "<group>"; };
+		11245D89143F69F20037C77D /* README */ = {isa = PBXFileReference; lastKnownFileType = text; name = README; path = Plugins/README; sourceTree = "<group>"; };
+		119AF2F2143F81890026BBC2 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		119AF2F9143F82800026BBC2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
+		119AF2FB143F82860026BBC2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +105,7 @@
 		11245D34143F69F20037C77D = {
 			isa = PBXGroup;
 			children = (
+				119AF2F2143F81890026BBC2 /* www */,
 				11245D60143F69F20037C77D /* jackpot */,
 				11245D45143F69F20037C77D /* Frameworks */,
 				11245D43143F69F20037C77D /* Products */,
@@ -165,6 +167,8 @@
 		11245D6B143F69F20037C77D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				119AF2FB143F82860026BBC2 /* Default.png */,
+				119AF2F9143F82800026BBC2 /* Default@2x.png */,
 				11245D80143F69F20037C77D /* Capture.bundle */,
 				11245D6C143F69F20037C77D /* en.lproj */,
 				11245D70143F69F20037C77D /* es.lproj */,
@@ -283,13 +287,11 @@
 				11245D65143F69F20037C77D /* InfoPlist.strings in Resources */,
 				11245D6F143F69F20037C77D /* Localizable.strings in Resources */,
 				11245D73143F69F20037C77D /* Localizable.strings in Resources */,
-				11245D76143F69F20037C77D /* icon.png in Resources */,
-				11245D78143F69F20037C77D /* icon@2x.png in Resources */,
-				11245D7A143F69F20037C77D /* icon-72.png in Resources */,
-				11245D7D143F69F20037C77D /* Default.png in Resources */,
-				11245D7F143F69F20037C77D /* Default@2x.png in Resources */,
 				11245D81143F69F20037C77D /* Capture.bundle in Resources */,
 				11245D83143F69F20037C77D /* PhoneGap.plist in Resources */,
+				119AF2F3143F81890026BBC2 /* www in Resources */,
+				119AF2FA143F82800026BBC2 /* Default@2x.png in Resources */,
+				119AF2FD143F84080026BBC2 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +413,7 @@
 				GCC_PREFIX_HEADER = "jackpot/jackpot-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "PHONEGAP_FRAMEWORK=YES";
 				INFOPLIST_FILE = "jackpot/jackpot-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					UIKit,
@@ -438,6 +441,7 @@
 				GCC_PREFIX_HEADER = "jackpot/jackpot-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "PHONEGAP_FRAMEWORK=YES";
 				INFOPLIST_FILE = "jackpot/jackpot-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					UIKit,
@@ -474,6 +478,7 @@
 				11245D8E143F69F20037C77D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -1,0 +1,75 @@
+body{
+	margin:0px;
+	background-color:black;
+}
+#container{
+	width:480px;
+	height:320px;
+	background-color:#444;
+	overflow:hidden;
+}
+#slots{
+	width:480px;
+	height:320px;
+	background-image:url(../img/slots.png);
+	background-size: 100%;
+	position:absolute;
+	z-index:1;
+}
+.coluna{
+	width:112px;
+	height:149px;
+	margin-right:5px;
+	border-radius:20px;
+	display:inline-block;
+	
+	position: relative;
+/*	overflow:hidden;*/
+}
+#coluna1{
+	margin-left: 67px;
+	top: -215px;
+}
+#coluna2{
+	top: -215px;
+}
+#coluna3{
+	top: -215px;
+}
+.card{
+	width:112px;
+	height:149px;
+	border-radius:3px;
+	margin-bottom:1px;
+	position: relative;
+/*	background-color:rgba(255,255,255,.2);*/
+}
+
+/*----------IDS DAS CARTAS ---------*/
+.c0001{
+	background-size: 100%;
+}
+.c0002{
+	background-size: 100%;
+}
+.c0003{
+	background-size: 100%;
+}
+.c0004{
+	background-size: 100%;
+}
+.c0005{
+	background-size: 100%;
+}
+.c0006{
+	background-size: 100%;
+}
+.c0007{
+	background-size: 100%;
+}
+.c0008{
+	background-size: 100%;
+}
+.c0009{
+	background-size: 100%;
+}
