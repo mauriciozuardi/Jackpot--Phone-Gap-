@@ -41,9 +41,27 @@ function init(){
 	
 	//inicia as variáveis
 	cardHeight = 300;
-	speedColuna1 = 0;
-	speedColuna2 = 0;
-	speedColuna3 = 0;
+	
+	coluna1 = {};
+	coluna1.speed = 0;
+	coluna1.snapReady = false;
+	coluna1.card1 = {};
+	coluna1.card2 = {};
+	coluna1.card3 = {};
+	
+	coluna2 = {};
+	coluna2.speed = 0;
+	coluna2.snapReady = false;
+	coluna2.card1 = {};
+	coluna2.card2 = {};
+	coluna2.card3 = {};
+	
+	coluna3 = {};
+	coluna3.speed = 0;
+	coluna3.snapReady = false;
+	coluna3.card1 = {};
+	coluna3.card2 = {};
+	coluna3.card3 = {};
 	
 	//debug control
 	reported = false;
@@ -53,7 +71,7 @@ function init(){
 }
 
 function nextStep(){
-	snapLimit = 3;
+	snapLimit = 15;
   atrito = .95;
   
   //MANTÉM O GIRO
@@ -61,119 +79,102 @@ function nextStep(){
 
 	$('#coluna1 .card').css({
 		top: function(index, value) {
-			return keepCardInRange(index, value, speedColuna1);
+			var newTop = parseFloat(value) + coluna1.speed;
+			return keepCardInRange(index, newTop);
 		}
 	});
 	$('#coluna2 .card').css({
 		top: function(index, value) {
-			return keepCardInRange(index, value, speedColuna2);
+			var newTop = parseFloat(value) + coluna2.speed;
+			return keepCardInRange(index, newTop);
 		}
 	});
 	$('#coluna3 .card').css({
 		top: function(index, value) {
-			return keepCardInRange(index, value, speedColuna3);
+			var newTop = parseFloat(value) + coluna3.speed;
+			return keepCardInRange(index, newTop);
 		}
 	});
 	
   
   // aplica o atrito (tem q usar sempre arredondados para não bugar)
-  speedColuna1 = Math.floor(speedColuna1 * atrito);
-  speedColuna2 = Math.floor(speedColuna2 * atrito);
-  speedColuna3 = Math.floor(speedColuna3 * atrito);
+  coluna1.speed = Math.floor(coluna1.speed * atrito);
+  coluna2.speed = Math.floor(coluna2.speed * atrito);
+  coluna3.speed = Math.floor(coluna3.speed * atrito);
   
-  //SNAP
-  // if (speedColuna1 < snapLimit) {
-  //      //define as distancias
-   //     float d1 = card1.position.y - defaultCardY;
-   //     float d2 = card2.position.y - defaultCardY;
-   //     float d3 = card3.position.y - defaultCardY;
-   // 
-   //     //identifica quem está mais perto e define os alvos
-   //     if(!snapTargetsDefinedColuna1){
-   //         if(abs(d1)<cardHeight/2){
-   //             //card 1 é a mais próxima
-   //             card1.yAlvo = defaultCardY;
-   //             //define o alvo das outras
-   //             card2.yAlvo = round(card2.position.y - d1);
-   //             card3.yAlvo = round(card3.position.y - d1);
-   //             NSLog(@"1 - Dark Ripper (%f, %f, %f)", card1.yAlvo, card2.yAlvo, card3.yAlvo);
-   //         } else if(abs(d2)<cardHeight/2){
-   //             //card 2 é a mais próxima
-   //             card2.yAlvo = defaultCardY;
-   //             //define o alvo das outras
-   //             card1.yAlvo = round(card1.position.y - d2);
-   //             card3.yAlvo = round(card3.position.y - d2);
-   //             NSLog(@"2 - Forest Brute (%f, %f, %f)", card1.yAlvo, card2.yAlvo, card3.yAlvo);
-   //         } else if(abs(d3)<cardHeight/2){
-   //             //card 3 é a mais próxima
-   //             card3.yAlvo = defaultCardY;
-   //             //define o alvo das outras
-   //             card2.yAlvo = round(card2.position.y - d3);
-   //             card1.yAlvo = round(card1.position.y - d3);
-   //             NSLog(@"3 - Tesla, the Hastah (%f, %f, %f)", card1.yAlvo, card2.yAlvo, card3.yAlvo);
-   //         }
-   //         
-   //         //avisa que já calculou
-   //         snapTargetsDefinedColuna1 = YES;
-   //         
-   //     } else {
-   //         //SMOOTH
-   //         speedColuna1 *= .5;
-   //         card1.position = ccp(card1.position.x, card1.position.y + (card1.yAlvo - card1.position.y)/20);
-   //         card2.position = ccp(card2.position.x, card2.position.y + (card2.yAlvo - card2.position.y)/20);
-   //         card3.position = ccp(card3.position.x, card3.position.y + (card3.yAlvo - card3.position.y)/20);        
-   //     }
-   //     
-   // } else {
-   //     //HARD
-   //     if(card1.position.y < defaultCardY - (1.5 * cardHeight)){
-   //         card1.position = ccp(card1.position.x, card1.position.y + (3*cardHeight));
-   //     }
-   //     if(card2.position.y < defaultCardY - (1.5 * cardHeight)){
-   //         card2.position = ccp(card2.position.x, card2.position.y + (3*cardHeight));
-   //     }
-   //     if(card3.position.y < defaultCardY - (1.5 * cardHeight)){
-   //         card3.position = ccp(card3.position.x, card3.position.y + (3*cardHeight));
-   //     }
-   // }
-
-	if(speedColuna1 + speedColuna2 + speedColuna3 == 0 & !reported){		
-
-		//percorre as cartas da coluna 1
-		$('#coluna1 .card').css({
-			top: function(index, value) {
-				//calcula a diferença entre a posição da carta e o centro do slot e a armazena numa variável nomeada dinamicamente
-				window['c1_d' + index] = (parseFloat(value) - ((index-2) * -cardHeight));
+ 
+	//CALCULA OS ALVOS para as 3 colunas
+	for(var k=1; k <= 3; k++){
+		
+		var colStr = 'coluna' + k;
+		var col = this[colStr];
+		
+		if(col.speed < snapLimit && col.speed > 0 && !col.snapReady){
+		
+			//percorre as cartas da coluna 1
+			$('#' + colStr + ' .card').css({
+				top: function(index, value) {
+					//calcula a diferença entre a posição da carta e o centro do slot e a armazena numa variável nomeada dinamicamente
+					col['card' + (index+1)].dist = (parseFloat(value) - ((index-2) * -cardHeight));
+				}
+			});
+		
+			closestCardIndex = -1;
+		
+			//descobre quem está mais perto
+			if(Math.abs(col.card1.dist) < Math.min(Math.abs(col.card2.dist), Math.abs(col.card3.dist))){
+				closestCardIndex = 0;
+			} else if(Math.abs(col.card2.dist) < Math.min(Math.abs(col.card1.dist), Math.abs(col.card3.dist))){
+				closestCardIndex = 1;
+			} else if(Math.abs(col.card3.dist) < Math.min(Math.abs(col.card1.dist), Math.abs(col.card2.dist))){
+				closestCardIndex = 2;
 			}
-		});
 		
-		//mostra as variáveis
-		console.log(c1_d0);
-		console.log(c1_d1);
-		console.log(c1_d2);
-		console.log("-")
+			//define os alvos
+			for(var i=0; i < 3; i++){
+				var newTop = (closestCardIndex-2) * -cardHeight;
+				col['card' + (i+1)].topAlvo = keepCardInRange(i, newTop);
+			}
 		
-		//debug control
-		reported = true;
+			//altera o comportamento
+			col.snapReady = true;
+		
+			//publica os resultados
+			console.log(colStr + ": " + closestCardIndex);
+		
+		} else if(col.snapReady){
+			//freia mais forte
+			// col.speed = Math.floor(col.speed * 0.5);
+		
+			// aplica o snap nas cartas
+			$('#' + colStr + ' .card').css({
+				top: function(index, value) {
+					var card = col['card' + (index+1)];
+					card.d = card.topAlvo - parseFloat(value);
+					return keepCardInRange(index, Math.round(parseFloat(value) + card.d/2));
+				}
+			});
+		}
 	}
-  
 }
 
 function clicked(event){
 	// console.log(event.target.id);
-	//tem q usar sempre inteiros para não bugar
-	speedColuna1 = 100 + Math.round(Math.random()*200);
-	speedColuna2 = 100 + Math.round(Math.random()*200);
-	speedColuna3 = 100 + Math.round(Math.random()*200);
 	
-	//debug control
-	reported = false;
+	//tem q usar sempre inteiros para não bugar
+	coluna1.speed = 100 + Math.round(Math.random()*100);
+	coluna2.speed = 200 + Math.round(Math.random()*100);
+	coluna3.speed = 300 + Math.round(Math.random()*100);
+	
+	//reseta os snapReady
+	coluna1.snapReady = false;
+	coluna2.snapReady = false;
+	coluna3.snapReady = false;
 }
 
-function keepCardInRange(index, cardTop, speed){
-	var newTop = parseFloat(cardTop) + speed;
+function keepCardInRange(index, newTop){
 	if(newTop > ((index-2) * -cardHeight) + cardHeight * 1.5){
 		newTop -= cardHeight * 3;
 	}
-	return newTop
+	return newTop;
 }
