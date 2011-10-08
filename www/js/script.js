@@ -45,26 +45,19 @@ function init(){
 	coluna1 = {};
 	coluna1.speed = 0;
 	coluna1.snapReady = false;
-	coluna1.card1 = {};
-	coluna1.card2 = {};
-	coluna1.card3 = {};
 	
 	coluna2 = {};
 	coluna2.speed = 0;
 	coluna2.snapReady = false;
-	coluna2.card1 = {};
-	coluna2.card2 = {};
-	coluna2.card3 = {};
 	
 	coluna3 = {};
 	coluna3.speed = 0;
 	coluna3.snapReady = false;
-	coluna3.card1 = {};
-	coluna3.card2 = {};
-	coluna3.card3 = {};
 	
-	//debug control
-	reported = false;
+	globals = {};
+	globals.d1 = 0;
+	globals.d2 = 0;
+	globals.d3 = 0;
 	
 	//ativa o "enterframe"
 	interval = setInterval("nextStep()", 1000/30);//30fps
@@ -75,101 +68,150 @@ function nextStep(){
   atrito = .95;
   
   //MANTÉM O GIRO
-  //atualiza a nova posição das cartas (aplica a velocidade)
+	somaVelocidades(true);
 
-	$('#coluna1 .card').css({
-		top: function(index, value) {
-			var newTop = parseFloat(value) + coluna1.speed;
-			return keepCardInRange(index, newTop);
-		}
-	});
-	$('#coluna2 .card').css({
-		top: function(index, value) {
-			var newTop = parseFloat(value) + coluna2.speed;
-			return keepCardInRange(index, newTop);
-		}
-	});
-	$('#coluna3 .card').css({
-		top: function(index, value) {
-			var newTop = parseFloat(value) + coluna3.speed;
-			return keepCardInRange(index, newTop);
-		}
-	});
-	
-  
-  // aplica o atrito (tem q usar sempre arredondados para não bugar)
-  coluna1.speed = Math.floor(coluna1.speed * atrito);
-  coluna2.speed = Math.floor(coluna2.speed * atrito);
-  coluna3.speed = Math.floor(coluna3.speed * atrito);
-  
- 
 	//CALCULA OS ALVOS para as 3 colunas
-	for(var k=1; k <= 3; k++){
+	for(var c=1; c <= 3; c++){
 		
-		var colStr = 'coluna' + k;
+		var colStr = 'coluna' + c;
 		var col = this[colStr];
 		
 		if(col.speed < snapLimit && col.speed > 0 && !col.snapReady){
-		
-			//percorre as cartas da coluna 1
-			$('#' + colStr + ' .card').css({
-				top: function(index, value) {
-					//calcula a diferença entre a posição da carta e o centro do slot e a armazena numa variável nomeada dinamicamente
-					col['card' + (index+1)].dist = (parseFloat(value) - ((index-2) * -cardHeight));
-				}
-			});
-		
-			closestCardIndex = -1;
-		
-			//descobre quem está mais perto
-			if(Math.abs(col.card1.dist) < Math.min(Math.abs(col.card2.dist), Math.abs(col.card3.dist))){
-				closestCardIndex = 0;
-			} else if(Math.abs(col.card2.dist) < Math.min(Math.abs(col.card1.dist), Math.abs(col.card3.dist))){
-				closestCardIndex = 1;
-			} else if(Math.abs(col.card3.dist) < Math.min(Math.abs(col.card1.dist), Math.abs(col.card2.dist))){
-				closestCardIndex = 2;
-			}
-		
-			//define os alvos
-			for(var i=0; i < 3; i++){
-				var newTop = (closestCardIndex-2) * -cardHeight;
-				col['card' + (i+1)].topAlvo = keepCardInRange(i, newTop);
-			}
-		
-			//altera o comportamento
+			atualizaDistancias(c);
+			var cci = closestCardIndex(c);
+			defineAlvos(cci, c);
 			col.snapReady = true;
-		
-			//publica os resultados
-			console.log(colStr + ": " + closestCardIndex);
-		
+			// console.log('c' + c + ' if: ' + cci);
 		} else if(col.snapReady){
-			//freia mais forte
-			// col.speed = Math.floor(col.speed * 0.5);
-		
-			// aplica o snap nas cartas
-			$('#' + colStr + ' .card').css({
-				top: function(index, value) {
-					var card = col['card' + (index+1)];
-					card.d = card.topAlvo - parseFloat(value);
-					return keepCardInRange(index, Math.round(parseFloat(value) + card.d/2));
-				}
-			});
+			atualizaDistancias(c);
+			var cci = closestCardIndex(c);
+			afetaVelocidade(cci, c);
+			// console.log('c' + c + ' else: ' + cci);
 		}
+		
+		//move as cartas
+		aplicaCSS();
+		
+		//aplica o atrito
+		col.speed *= atrito;
 	}
 }
 
 function clicked(event){
 	// console.log(event.target.id);
-	
-	//tem q usar sempre inteiros para não bugar
-	coluna1.speed = 100 + Math.round(Math.random()*100);
-	coluna2.speed = 200 + Math.round(Math.random()*100);
-	coluna3.speed = 300 + Math.round(Math.random()*100);
-	
+	coluna1.speed = 100 + Math.random()*100;
+	coluna2.speed = 200 + Math.random()*100;
+	coluna3.speed = 300 + Math.random()*100;
+
 	//reseta os snapReady
 	coluna1.snapReady = false;
 	coluna2.snapReady = false;
 	coluna3.snapReady = false;
+}
+
+function setFloatAsData(element, key, value){	
+	element.data(key, value);
+}
+
+function getFloatFromData(element, key){
+	if(!element.data(key)){
+		element.data(key, 0.00000000000);
+	}
+	return parseFloat(element.data(key));
+}
+
+function somaVelocidades(){
+	// varre colunas
+	for(var c=1; c<=3; c++){
+		// varre linhas
+		for(var l=1; l<=3; l++){
+			//define o elemento
+			var element = $('#coluna' + c + ' .linha' + l);
+			//pega o valor armazenado no campo data do elemento
+			var t = getFloatFromData(element, 'top');
+			//soma a velocidade
+			t += this['coluna' + c].speed;
+			//atualiza a velocidade no campo data do elemento
+			setFloatAsData(element, 'top', t);
+		}
+	}
+}
+
+function atualizaDistancias(c){
+	// varre linhas
+	for(var l=1; l<=3; l++){
+		//define o elemento
+		var element = $('#coluna' + c + ' .linha' + l);
+		//pega o valor armazenado no campo data do elemento
+		var t = getFloatFromData(element, 'top');			
+		//calcula a diferença entre a posição da carta e o centro do slot e a armazena numa variável nomeada dinamicamente
+		setFloatAsData(element, 'dist', (t - ((l-3) * -cardHeight)));
+		globals['d' + l] = getFloatFromData(element, 'dist');
+		// console.log("Coluna " + c + " : Carta " + l + " dist = " + getFloatFromData(element, 'dist'));
+	}
+}
+
+function closestCardIndex(c){
+	//descobre quem está mais perto
+	if(Math.abs(globals.d1) < Math.min(Math.abs(globals.d2), Math.abs(globals.d3))){
+		return 1;
+	} else if(Math.abs(globals.d2) < Math.min(Math.abs(globals.d1), Math.abs(globals.d3))){
+		return 2;
+	} else if(Math.abs(globals.d3) < Math.min(Math.abs(globals.d1), Math.abs(globals.d2))){
+		return 3;
+	} else if(Math.abs(globals.d1) <= Math.min(Math.abs(globals.d2), Math.abs(globals.d3))){
+		return 1;
+	} else if(Math.abs(globals.d2) <= Math.min(Math.abs(globals.d1), Math.abs(globals.d3))){
+		return 2;
+	} else if(Math.abs(globals.d3) <= Math.min(Math.abs(globals.d1), Math.abs(globals.d2))){
+		return 3;
+	}
+	return 'none';
+}
+
+function defineAlvos(ccIndex, c){
+	for(var l=1; l<=3; l++){
+		var element = $('#coluna' + c + ' .linha' + l);
+		setFloatAsData(element, 'alvo', (ccIndex-3) * -cardHeight);
+		// console.log("Coluna " + c + " : Carta " + l + " (" + getFloatFromData(element, 'alvo') + ")" );
+	}
+}
+
+function afetaVelocidade(ccIndex, c){
+	var speedDelta = -globals['d' + ccIndex]/30; // <-- diminua o divisor para aumentar a força q puxa para o lugar certo
+	var col = this['coluna' + c];
+	col.speed += speedDelta;
+	col.speed *= 0.85; // <-- varie entre .7 e .9 para controlar a "viscosidade" ou algo parecido
+	// console.log(speedDelta);
+	
+	//SNAP final
+	if(Math.abs(speedDelta) < 0.001){
+		col.snapReady = false;
+		col.speed = 0;
+		console.log('coluna' + c + ': ' + closestCardIndex(c));
+	}
+	if(coluna1.speed == 0 && coluna2.speed == 0 && coluna2.speed == 0 && !coluna1.snapReady && !coluna2.snapReady && !coluna3.snapReady){
+		console.log('-');
+	}
+}
+
+function aplicaCSS(){
+	// varre colunas
+	for(var c=1; c<=3; c++){
+		// varre linhas
+		for(var l=1; l<=3; l++){
+			//aplica o css no elemento
+			var element = $('#coluna' + c + ' .linha' + l);
+			//pega o valor armazenado no campo data do elemento
+			var t = getFloatFromData(element, 'top');
+			//mantém in range
+			t = keepCardInRange(l-1, t);
+			//atualiza a velocidade no campo data do elemento
+			setFloatAsData(element, 'top', t);
+			//aplica o css no elemento
+			element.css('top', t);
+		}
+	}
 }
 
 function keepCardInRange(index, newTop){

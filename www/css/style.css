@@ -44,44 +44,6 @@ body{
 /*	background-color:rgba(255,255,255,.2);*/
 }
 
-/*----------POSIÇÕES DAS CARTAS ---------*/
-
-#card1{
-	top:0px;
-}
-#card2{
-	top:0px;
-/*	display:none;*/
-}
-#card3{
-	top:0px;
-/*	display:none;*/
-}
-#card4{
-	top:0px;
-/*	display:none;*/
-}
-#card5{
-	top:0px;
-/*	display:none;*/
-}
-#card6{
-	top:0px;
-/*	display:none;*/
-}
-#card7{
-	top:0px;
-/*	display:none;*/
-}
-#card8{
-	top:0px;
-/*	display:none;*/
-}
-#card9{
-	top:0px;
-/*	display:none;*/
-}
-
 /*----------IDS DAS CARTAS ---------*/
 .c0001{
 	background-image:url(../img/c0001.png);
