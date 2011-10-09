@@ -60,7 +60,7 @@ function init(){
 	globals.d3 = 0;
 	
 	//ativa o "enterframe"
-	interval = setInterval("nextStep()", 1000/30);//30fps
+	interval = setInterval("nextStep()", 1000/20);//20fps
 }
 
 function nextStep(){
@@ -99,9 +99,9 @@ function nextStep(){
 
 function clicked(event){
 	// console.log(event.target.id);
-	coluna1.speed = 100 + Math.random()*100;
-	coluna2.speed = 200 + Math.random()*100;
-	coluna3.speed = 300 + Math.random()*100;
+	coluna1.speed = 150 + Math.random()*100;
+	coluna2.speed = 300 + Math.random()*100;
+	coluna3.speed = 600 + Math.random()*100;
 
 	//reseta os snapReady
 	coluna1.snapReady = false;
@@ -178,10 +178,10 @@ function defineAlvos(ccIndex, c){
 }
 
 function afetaVelocidade(ccIndex, c){
-	var speedDelta = -globals['d' + ccIndex]/30; // <-- diminua o divisor para aumentar a força q puxa para o lugar certo
+	var speedDelta = -globals['d' + ccIndex]/50; // <-- diminua o divisor para aumentar a força q puxa para o lugar certo
 	var col = this['coluna' + c];
 	col.speed += speedDelta;
-	col.speed *= 0.85; // <-- varie entre .7 e .9 para controlar a "viscosidade" ou algo parecido
+	col.speed *= 0.95; // <-- varie entre .7 e .9999 para controlar a "viscosidade" ou algo parecido
 	// console.log(speedDelta);
 	
 	//SNAP final
