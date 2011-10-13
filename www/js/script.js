@@ -60,7 +60,7 @@ function init(){
 	globals.d3 = 0;
 	
 	//ativa o "enterframe"
-	interval = setInterval("nextStep()", 1000/20);//20fps
+	interval = setInterval("nextStep()", 1000/60);//60fps
 }
 
 function nextStep(){
@@ -178,7 +178,7 @@ function defineAlvos(ccIndex, c){
 }
 
 function afetaVelocidade(ccIndex, c){
-	var speedDelta = -globals['d' + ccIndex]/50; // <-- diminua o divisor para aumentar a força q puxa para o lugar certo
+	var speedDelta = -globals['d' + ccIndex]/80; // <-- diminua o divisor para aumentar a força q puxa para o lugar certo
 	var col = this['coluna' + c];
 	col.speed += speedDelta;
 	col.speed *= 0.95; // <-- varie entre .7 e .9999 para controlar a "viscosidade" ou algo parecido
