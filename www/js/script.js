@@ -59,6 +59,29 @@ function init(){
 	globals.d2 = 0;
 	globals.d3 = 0;
 	
+	//pega as variáveis da URL
+	
+	// //Modo de acessar:
+	// URLvars = getUrlVars();
+	// for (var i=0; i<URLvars.length; i++){
+	// 	console.log(URLvars[i] + ": " + URLvars[URLvars[i]]);		
+	// }
+	
+	var URLvars = getUrlVars();
+	var cardIDs = URLvars["deck"];
+	var arrayIDs = cardIDs.split(",");
+	
+	//preenche as cartas com a classe de CSS devida
+	var idIndex = 0;
+	for (var l=1; l<4; l++){
+		for(var c=1; c<4; c++){
+			// console.log("coluna" + c + " " + "linha" + l + ": c" + arrayIDs[idIndex]);
+			$('#coluna' + c + ' .linha' + l).addClass('c' + arrayIDs[idIndex]);
+			idIndex ++;
+		}
+	}
+
+	
 	//ativa o "enterframe"
 	interval = setInterval("nextStep()", 1000/60);//60fps
 }
@@ -219,4 +242,17 @@ function keepCardInRange(index, newTop){
 		newTop -= cardHeight * 3;
 	}
 	return newTop;
+}
+
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
 }
